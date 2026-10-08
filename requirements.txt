@@ -1,0 +1,9 @@
+mistralai
+arxiv
+chromadb
+fastapi
+pymupdf
+sentence-transformers
+uvicorn[standard]
+python-dotenv
+
