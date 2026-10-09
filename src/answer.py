@@ -16,7 +16,7 @@ def generate(system: str, user: str) -> str:
     for attempt in range(3):
         try:
             resp = llm.chat.complete(
-                model="mistral-small-latest",
+                model="open-mistral-nemo",
                 max_tokens=800,
                 messages=[{"role": "system", "content": system},
                           {"role": "user", "content": user}],
