@@ -2,11 +2,11 @@ from fastapi import FastAPI, HTTPException, Query
 
 from src.answer import answer
 
-app = FastAPI(title="Assistant RAG sur articles scientifiques")
+app = FastAPI(title="Scientific Paper RAG Assistant")
 
 
 @app.get("/ask")
-def ask(q: str = Query(min_length=1, description="Question sur les articles indexés")) -> dict:
+def ask(q: str = Query(min_length=1, description="Question about the indexed papers")) -> dict:
     try:
         return answer(q)
     except RuntimeError as error:

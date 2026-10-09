@@ -1,1 +1,20 @@
-{"question":"Quelle est la masse finale du trou noir issu de GW150914 ?","source":"1602.03837"}
+{"question":"What is LIGO's primary goal according to the observatory overview paper?","source":"0711.3041"}
+{"question":"How many LIGO interferometers are operated, and across how many sites are they located?","source":"0711.3041"}
+{"question":"What strain sensitivity can the LIGO detectors described in the paper reach?","source":"0711.3041"}
+{"question":"What astrophysical objects can LIGO study directly through gravitational-wave detection?","source":"0711.3041"}
+{"question":"What kinds of compact systems are included in compact binary coalescences studied in LIGO's first year of S5 data?","source":"0901.0302"}
+{"question":"How are inspiral waveforms predicted by post-Newtonian theory used to search for compact binary coalescences?","source":"0901.0302"}
+{"question":"When did LIGO complete its two-year S5 science run?","source":"0901.0302"}
+{"question":"What realistic coalescence rate per L10 luminosity does the paper estimate for binary neutron stars?","source":"0901.0302"}
+{"question":"What mass range does the paper associate with intermediate-mass black holes?","source":"0905.1654"}
+{"question":"What type of electromagnetic source is discussed as possible evidence for intermediate-mass black holes?","source":"0905.1654"}
+{"question":"What minimum black-hole mass is reported for the source whose luminosity supports the intermediate-mass black-hole interpretation?","source":"0905.1654"}
+{"question":"What post-coalescence phenomenon does the study search for in LIGO S4 data?","source":"0905.1654"}
+{"question":"What astrophysical phenomena are mentioned as possible sources of gravitational-wave bursts?","source":"gr-qc/0312056"}
+{"question":"When did the first coincident observation period of LIGO, GEO 600, and TAMA 300 take place, and how long did it last?","source":"gr-qc/0312056"}
+{"question":"What type of gravitational-wave bursts does the paper report searching for with the LIGO detectors?","source":"gr-qc/0312056"}
+{"question":"What optical configuration had the three LIGO detectors reached by the summer of 2002?","source":"gr-qc/0312056"}
+{"question":"Which regions host the LIGO observatories described in the 2019 outlook paper?","source":"1904.03187"}
+{"question":"How long are the perpendicular arms of the Advanced LIGO interferometers described in the paper?","source":"1904.03187"}
+{"question":"Between what dates did the Advanced LIGO detectors collect data during their first observing run, O1?","source":"1904.03187"}
+{"question":"According to the paper, what can detected signal properties help researchers investigate, including tests of general relativity and cosmological measurements?","source":"1904.03187"}

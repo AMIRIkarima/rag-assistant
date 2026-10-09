@@ -1,10 +1,10 @@
-# Assistant RAG sur articles scientifiques
+# Scientific Paper RAG Assistant
 
-Assistant de recherche sur des articles consacrés aux ondes gravitationnelles. Le projet utilise des briques Python explicites : PyMuPDF pour extraire le texte, Sentence Transformers pour les embeddings locaux, ChromaDB pour la recherche vectorielle, Mistral pour la génération et FastAPI pour l'API.
+A research assistant for papers about gravitational waves. The project uses PyMuPDF for text extraction, Sentence Transformers for local embeddings, ChromaDB for vector search, Mistral for answer generation, and FastAPI for the API.
 
-## Environnement
+## Environment
 
-Python 3.12 ou plus récent est recommandé. Depuis la racine du projet, crée et active un environnement virtuel :
+Python 3.12 or newer is recommended. From the project root, create and activate a virtual environment:
 
 ```powershell
 py -3.12 -m venv .venv
@@ -13,55 +13,55 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-Dans VS Code, sélectionne `.venv\Scripts\python.exe` comme interpréteur. Le premier lancement de l'ingestion télécharge le modèle d'embeddings `BAAI/bge-small-en-v1.5`.
+In VS Code, select `.venv\Scripts\python.exe` as the interpreter. The first ingestion run downloads the `BAAI/bge-small-en-v1.5` embedding model.
 
-## Corpus et indexation
+## Corpus and indexing
 
-Pour télécharger jusqu'à 25 articles arXiv correspondant à la requête par défaut puis indexer leurs pages :
+To download up to 25 arXiv papers matching the default query and index their pages:
 
 ```powershell
 python -m src.ingest --download --max-results 25
 ```
 
-L'ingestion enregistre les PDF dans `data/pdfs/`, conserve le titre et l'identifiant arXiv dans `data/papers.json`, puis crée l'index persistant dans `chroma_db/`. Les PDF téléchargés et l'index sont ignorés par Git. Pour indexer tes propres PDF, dépose-les dans `data/pdfs/` et lance `python -m src.ingest`. Les noms de fichiers servent d'identifiants de source si aucune métadonnée arXiv n'est disponible.
+Ingestion saves PDFs to `data/pdfs/`, stores their titles and arXiv IDs in `data/papers.json`, and creates the persistent index in `chroma_db/`. Downloaded PDFs and the index are ignored by Git. To index your own PDFs, place them in `data/pdfs/` and run `python -m src.ingest`. Filenames are used as source IDs when arXiv metadata is unavailable.
 
-Le découpage par défaut est de 1 000 caractères avec 200 caractères de recouvrement. Les options de découpage sont aussi disponibles dans `ingest_papers()` pour mener des comparaisons contrôlées.
+The default chunk size is 1,000 characters with 200 characters of overlap. Chunking options are also available in `ingest_papers()` for controlled comparisons.
 
-## Questions et API
+## Questions and API
 
-La recherche vectorielle seule est disponible avec `retrieve(question, k=5)` dans `src.retrieve`. Pour générer une réponse sourcée, configure la clé d'API sans l'inscrire dans le dépôt :
+Vector search is available through `retrieve(question, k=5)` in `src.retrieve`. To generate a cited answer, configure your API key without adding it to the repository:
 
 ```powershell
 $env:MISTRAL_API_KEY = "..."
 ```
 
-Le modèle de génération utilisé par défaut est `mistral-small-latest`.
+The default generation model is `open-mistral-nemo` (configured as `LLM_MODEL` in `src/config.py`).
 
-Lance ensuite l'API :
+Start the API:
 
 ```powershell
 uvicorn src.api:app --reload
 ```
 
-Teste `http://127.0.0.1:8000/docs` ou `http://127.0.0.1:8000/ask?q=...`. La réponse contient le texte généré et les métadonnées de ses extraits sources. Le modèle doit suivre la consigne de citer ses affirmations avec `[n]` et de signaler explicitement les informations manquantes.
+Try `http://127.0.0.1:8000/docs` or `http://127.0.0.1:8000/ask?q=...`. The response contains the generated answer and metadata for its source excerpts. The model is instructed to cite claims using `[n]` and explicitly state when information is missing.
 
-## Évaluation du retrieval
+## Retrieval evaluation
 
-Ajoute au moins 20 questions dont tu as vérifié la réponse, avec l'identifiant arXiv attendu dans `eval/questions.jsonl` (une entrée JSON par ligne) :
+Add at least 20 questions with verified answers and the expected arXiv ID to `eval/questions.jsonl` (one JSON object per line):
 
 ```json
-{"question":"Quelle est la masse finale du trou noir issu de GW150914 ?","source":"1602.03837"}
+{"question":"What is LIGO's primary scientific goal?","source":"0711.3041"}
 ```
 
-Lance `python -m eval.run_eval` pour afficher hit@k, son intervalle de confiance de Wilson à 95 %, et le MRR pour k = 1, 3, 5 et 10. Le fichier fourni est un exemple de départ, pas un jeu d'évaluation suffisant pour tirer des conclusions. Évalue séparément plusieurs tailles de chunks et modèles d'embedding ; note les résultats et les échecs après vérification manuelle.
+Run `python -m eval.run_eval` to report hit@k, its 95% Wilson confidence interval, and MRR for k = 1, 3, 5, and 10. The included questions are a starting point, not a sufficiently large evaluation set for drawing conclusions. Evaluate multiple chunk sizes and embedding models separately; record results and failures after manual review.
 
 ## Docker
 
-Construis d'abord l'index localement, puis crée et lance l'image depuis la racine du projet :
+Build the index locally first, then build and run the image from the project root:
 
 ```powershell
 docker build -t rag-app .
 docker run --rm -e MISTRAL_API_KEY -p 8000:8000 rag-app
 ```
 
-Ne place jamais la clé Mistral dans l'image ou dans le dépôt.
+Never put the Mistral API key in the image or repository.

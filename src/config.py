@@ -6,5 +6,6 @@ PAPER_METADATA_PATH = PROJECT_ROOT / "data" / "papers.json"
 CHROMA_DIR = PROJECT_ROOT / "chroma_db"
 COLLECTION_NAME = "papers"
 EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
+LLM_MODEL = "open-mistral-nemo"
 DEFAULT_CHUNK_SIZE = 1000
 DEFAULT_CHUNK_OVERLAP = 200
