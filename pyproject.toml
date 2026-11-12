@@ -1,0 +1,42 @@
+[build-system]
+
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rag-assistant"
+
+version = "0.1.0"
+description = "Retrieval-augmented assistant for scientific papers about gravitational waves."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "Karima Amiri", email = "karima.amiri@etu.emse.fr" }]
+keywords = ["rag", "retrieval", "arxiv", "chromadb", "fastapi", "mistral"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+
+# Runtime dependencies. 
+dependencies = [
+    "mistralai==3.1.0",           # answer generation (Mistral API client)
+    "arxiv",                      # download papers and metadata from arXiv
+    "chromadb",                   # persistent vector store
+    "fastapi",                    # HTTP API
+    "pymupdf",                    # PDF text extraction
+    "sentence-transformers",      # local embeddings (BAAI/bge-small-en-v1.5)
+    "uvicorn[standard]",          # ASGI server for the API
+    "python-dotenv",              # load MISTRAL_API_KEY from a local .env file
+]
+
+[project.urls]
+Repository = "https://github.com/AMIRIkarima/rag-assistant"
+
+[tool.hatch.build.targets.wheel]
+# The code lives in the `src` package (imported as `src.ingest`, `src.api`, ...).
+packages = ["src"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "eval", "README.md", "pyproject.toml"]
